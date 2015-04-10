@@ -236,6 +236,23 @@
 - (void)finishSendingMessageAnimated:(BOOL)animated;
 
 /**
+ *  Completes the "sending" of a new message by resetting the `inputToolbar`, adding a new collection view cell in the collection view,
+ *  reloading the collection view, and scrolling to the newly sent message as specified by `automaticallyScrollsToMostRecentMessage`.
+ *  Scrolling to the new message can be animated as specified by the animated parameter. Whether to reload the collection view can be
+ *  specified by the reloadCollectionView parameter.
+ *
+ *  @param animated Specifies whether the sending of a message should be animated or not. Pass `YES` to animate changes, `NO` otherwise.
+ *  @param animated Specifies whether the sending of a message should trigger a reload of the collection view and invalidation of the
+ *         collection view flow layout. Pass `YES` to reload, `NO` otherwise.
+ *
+ *  @discussion You should call this method at the end of `didPressSendButton: withMessageText: senderId: senderDisplayName: date`
+ *  after adding the new message to your data source and performing any related tasks.
+ *
+ *  @see `automaticallyScrollsToMostRecentMessage`.
+ */
+- (void)finishSendingMessageAnimated:(BOOL)animated reloadCollectionView:(BOOL)reloadCollectionView;
+
+/**
  *  Animates the receiving of a new message. See `finishReceivingMessageAnimated:` for more details.
  *
  *  @see `finishReceivingMessageAnimated:`.

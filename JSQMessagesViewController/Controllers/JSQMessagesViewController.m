@@ -325,8 +325,13 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     [self finishSendingMessageAnimated:YES];
 }
 
-- (void)finishSendingMessageAnimated:(BOOL)animated {
+- (void)finishSendingMessageAnimated:(BOOL)animated
+{
+    [self finishSendingMessageAnimated:animated reloadCollectionView:YES];
+}
 
+- (void)finishSendingMessageAnimated:(BOOL)animated reloadCollectionView:(BOOL)reloadCollectionView
+{
     UITextView *textView = self.inputToolbar.contentView.textView;
     textView.text = nil;
     [textView.undoManager removeAllActions];
@@ -335,8 +340,10 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
     [[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification object:textView];
 
-    [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
-    [self.collectionView reloadData];
+    if (reloadCollectionView) {
+        [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+        [self.collectionView reloadData];
+    }
 
     if (self.automaticallyScrollsToMostRecentMessage) {
         [self scrollToBottomAnimated:animated];
