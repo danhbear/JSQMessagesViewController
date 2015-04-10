@@ -300,7 +300,13 @@
     
     [self.demoData.messages addObject:message];
     
-    [self finishSendingMessageAnimated:YES];
+    // Insert item manually to demonstrate issue #887
+    NSInteger newIndex = [self.demoData.messages count] - 1;
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:newIndex inSection:0];
+    [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+    
+    // Finish without reloading collection view
+    [self finishSendingMessageAnimated:YES reloadCollectionView:NO];
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender
