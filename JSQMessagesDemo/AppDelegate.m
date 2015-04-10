@@ -29,6 +29,9 @@
     [NSUserDefaults saveIncomingAvatarSetting:YES];
     [NSUserDefaults saveOutgoingAvatarSetting:YES];
     
+    // Force springiness on to demo issue #887
+    [NSUserDefaults saveSpringinessSetting:YES];
+    
     return YES;
 }
 
